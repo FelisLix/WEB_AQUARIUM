@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакти</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/dist/css/bootstrap.css}">
+</head>
+<body>
+
+
+<header>
+    <div class="logo">｡𖦹° Reef ｡𖦹°</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href='/products'>All Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Freshwater Fish</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 1}">Catfish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 2}">Betta Fish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 3}">Angel Fish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 4}">Barbs</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 5}">Corydoras Fish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 6}">Guppies</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/category/' + 1}">All Freshwater Fish</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Saltwater Fish</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 7}">Anthias</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 8}">Butterfly Fish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 9}">Clown Fish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 10}">Hawkfish</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 11}">Gobies</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 12}">Seahorses</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 13}">Sharks</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 14}">Triggerfish</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/category/' + 2}">All Saltwater Fish</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" th:href="@{'/products/category/' + 3}">Corals</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Plants</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 17}">Live Plants</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 16}">Plastic Plants</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/category/' + 4}">All Plants</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Food and Supplies</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 19}">Accessories</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 20}">Food</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 21}">Water Treatment</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/type/' + 22}">Medication</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{'/products/category/' + 6}">All Food and Supplies</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{'/products/category/' + 5}">Aquariums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{'/cart'}">Shopping Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-disabled="true" href='/contacts'>About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<form class="container w-50 p-3" >
+    <h1 class="display-6">Have questions? Contact us!</h1>
+    <div class="row mb-3">
+        <div class="col">
+            <label for="Email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="Email">
+        </div>
+        <div class="col">
+            <label for="Name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="Name">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="Subject" class="form-label">Subject :</label>
+        <input type="text" class="form-control" id="Subject">
+    </div>
+    <div class="mb-3">
+        <label for="Question" class="form-label">Question:</label>
+        <textarea class="form-control"  id="Question" rows="3"></textarea>
+    </div>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-outline-dark">Send!</button>
+    </div>
+
+</form>
+<footer>
+    <p>&copy; 2024 Reef. All rights reserved.</p>
+    <p>Contacts: +380 123 456 789 | info@reef.com</p>
+</footer>
+<script th:src="@{/webjars/jquery/3.7.0/dist/jquery.js}"></script>
+<script th:src="@{/webjars/popperjs__core/2.11.8/dist/umd/popper.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.0/dist/js/bootstrap.bundle.js}"></script>
+</body>
+</html>

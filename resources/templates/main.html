@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquarium Store</title>
+  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="/review.css">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/dist/css/bootstrap.css}">
+</head>
+<body>
+
+
+<header>
+    <div class="logo">｡𖦹° Reef ｡𖦹°</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDarkDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href='/products'>All Products</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Freshwater Fish</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 1}">Catfish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 2}">Betta Fish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 3}">Angel Fish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 4}">Barbs</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 5}">Corydoras Fish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 6}">Guppies</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" th:href="@{'/products/category/' + 1}">All Freshwater Fish</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Saltwater Fish</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 7}">Anthias</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 8}">Butterfly Fish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 9}">Clown Fish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 10}">Hawkfish</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 11}">Gobies</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 12}">Seahorses</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 13}">Sharks</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 14}">Triggerfish</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" th:href="@{'/products/category/' + 2}">All Saltwater Fish</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" th:href="@{'/products/category/' + 3}">Corals</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Plants</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 17}">Live Plants</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 16}">Plastic Plants</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" th:href="@{'/products/category/' + 4}">All Plants</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Food and Supplies</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 19}">Accessories</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 20}">Food</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 21}">Water Treatment</a></li>
+                <li><a class="dropdown-item" th:href="@{'/products/type/' + 22}">Medication</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" th:href="@{'/products/category/' + 6}">All Food and Supplies</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{'/products/category/' + 5}">Aquariums</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" th:href="@{'/cart'}">Shopping Cart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-disabled="true" href='/contacts'>About Us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</header>
+
+<section class="banner">
+  <h1 class="display-3">Welcome to Reef</h1>
+  <a th:href="@{/products}" class="btn btn-outline-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+    View Products
+  </a>
+</section>
+
+<section class="categories">
+  <h2>Categories</h2>
+  <div class="category-card">
+    <img src="/images/freshwater.jpg" alt="Freshwater Fish">
+    <p class="h4">Freshwater Fish</p>
+  </div>
+  <div class="category-card">
+    <img src="/images/saltwater.jpg" alt="Saltwater Fish">
+    <p class="h4">Saltwater Fish</p>
+  </div>
+  <div class="category-card">
+    <img src="/images/coral.jpg" alt="Corals">
+    <p class="h4">Corals</p>
+  </div>
+</section>
+<section class="categories">
+  <div class="category-card">
+    <img src="/images/tanks.jpg" alt="Tanks">
+    <p class="h4">Tanks</p>
+  </div>
+  <div class="category-card">
+    <img src="/images/plants.jpg" alt="Plants">
+    <p class="h4">Plants</p>
+  </div>
+  <div class="category-card">
+    <img src="/images/supplies.jpg" alt="Food and Supplies">
+    <p class="h4">Food and Supplies</p>
+  </div>
+</section>
+
+<section class="reviews">
+  <h1 class="display-6">Customer Reviews</h1>
+  <div class="review">
+    <p> &#9733; &#9733; &#9733; &#9733; &#9733;</p>
+    <p>Чудовий сервіс! Доставили швидко!</p>
+    <p> — Іван, Київ </p>
+  </div>
+  <div class="review">
+    <p> &#9733; &#9733; &#9733; &#9733; &#9733;</p>
+    <p>Рибки здорові та активні. Дуже задоволена покупкою!</p>
+    <p> — Ольга, Харків</p>
+  </div>
+</section>
+<footer>
+  <p>&copy; 2024 Reef. All rights reserved.</p>
+  <p>Contacts: +380 123 456 789 | info@reef.com</p>
+</footer>
+
+<script th:src="@{/webjars/jquery/3.7.0/dist/jquery.js}"></script>
+<script th:src="@{/webjars/popperjs__core/2.11.8/dist/umd/popper.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.0/dist/js/bootstrap.bundle.js}"></script>
+</body>
+</html>

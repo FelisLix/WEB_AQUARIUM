@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Office</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/dist/css/bootstrap.css}">
+</head>
+<body>
+<div class="container-xxl">
+    <div class="text-bg-dark p-4"></div>
+    <div class="row">
+        <div class="col-2">
+            <ul class="nav flex-column nav-underline">
+                <li class="nav-item"></li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href='/main'>Відвідати магазин</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href='/order_list'>Замовлення</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Товари</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href='/products_editor'>Усі товари</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href='/statistics'>Аналітика</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href='/users'>Користувачі</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col border-start border-dark">
+            <h1>Замовлення</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>From</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Details</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.customer.firstName} + ' ' + ${order.customer.lastName}"></td>
+                    <td th:text="${addresses.get(order.id).country}"> </td>
+                    <td th:text="${order.status}"></td>
+                    <td th:text="${order.total}"></td>
+                    <td>
+                        <button class="btn btn-dark" type="button"
+                                th:data-bs-toggle="offcanvas"
+                                th:data-bs-target="'#offcanvas-' + ${order.id}"
+                                aria-controls="offcanvasWithBothOptions">Details</button>
+                        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1"
+                             th:id="'offcanvas-' + ${order.id}"
+                             aria-labelledby="offcanvasWithBothOptionsLabel">
+                            <div class="offcanvas-header">
+                                <h3>Замовлення<span th:text="' №' + ${order.id}"></span></h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+
+                                <div class="row">
+                                    <form th:action="@{'/order_list/update_order/' + ${order.id}} " method="post">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item" th:text="${order.orderDate}"></li>
+                                            <li class="list-group-item">Статус замовлення:</li>
+                                            <li class="list-group-item"><select class="form-select" name="orderStatus" aria-label="Order Status">
+                                                <option selected disabled th:text="${order.status}"></option>
+                                                <option value="Виконано">Виконано</option>
+                                                <option value="Скасовано">Скасовано</option>
+                                                <option value="В обробці">В обробці</option>
+                                                <option value="Очікує оплати">Очікує оплати</option>
+                                                <option value="Відправлено">Відправлено</option>
+                                                <option value="Очікує відправлення">Очікує відправлення</option>
+                                            </select></li>
+                                            <li class="list-group-item">Статус оплати:</li>
+                                            <li class="list-group-item"><select class="form-select" name="paymentStatus" aria-label="Payment Status">
+                                                <option selected disabled th:text="${payments.get(order.id).status}"></option>
+                                                <option value="Оплачено">Оплачено</option>
+                                                <option value="Не оплачено">Не оплачено</option>
+                                            </select></li>
+                                            <li class="list-group-item">Замовлення обробив:</li>
+                                            <li class="list-group-item"><select class="form-select" name="employeeId" aria-label="Employee">
+                                                <option value="0" disabled selected></option>
+                                                <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="${employee.firstName} + ' ' + ${employee.lastName} "></option>
+                                            </select></li>
+                                            <li class="list-group-item d-grid gap-2" > <button class="btn btn-outline-dark" type="submit">Оновити</button></li>
+                                        </ul>
+                                    </form>
+                                </div>
+
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                Платіжні дані:
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item"><strong>Від:</strong><span th:text="' ' + ${customers.get(order.id).firstName} + ' ' + ${customers.get(order.id).lastName}"></span></li>
+                                                    <li class="list-group-item"><strong>Тел.:</strong><span th:text="${customers.get(order.id).phone}"></span></li>
+                                                    <li class="list-group-item"><strong>Email:</strong> <span th:text="${customers.get(order.id).email}"></span></li>
+                                                    <li class="list-group-item"><strong>Метод оплати:</strong> <span th:text="' ' + ${payments.get(order.id).method}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                Реквізити доставки:
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Поштовий індекс:<span th:text="' ' + ${addresses.get(order.id).postalCode}"></span></li>
+                                                    <li class="list-group-item"><span th:text="${addresses.get(order.id).country} + ', м.' + ${addresses.get(order.id).city} + ', вул.' + ${addresses.get(order.id).street} + ', буд.' + ${addresses.get(order.id).building}"></span></li>
+                                                    <li class="list-group-item"><span th:text="${addresses.get(order.id).details}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                Товари:
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Product</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="orderLine : ${orderLinesMap[order.id]}">
+                                                        <td><span th:text="${orderLine.product.id}"></span></td>
+                                                        <td><span th:text="${orderLine.product.name}"></span></td>
+                                                        <td><span th:text="${orderLine.quantity}"></span></td>
+                                                        <td><span th:text="${orderLine.product.price}"></span></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <h5>Всього:<span th:text="${order.total}"></span> $</h5>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" th:data-bs-toggle="modal"
+                                th:data-bs-target="'#deleteModal-' + ${order.id}">
+                            Delete
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="'deleteModal-' + ${order.id}" tabindex="-1"
+                             aria-labelledby="deleteModalLabel-' + ${order.id}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5"
+                                            th:id="'deleteModalLabel-' + ${order.id}"
+                                            th:text="'Delete Order ' + ${order.id} + '?'">
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form th:action="@{/order_list/delete_order/{orderId}(orderId=${order.id})}" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const modalEls = document.querySelectorAll('.modal');
+    modalEls.forEach(modalEl => {
+        modalEl.addEventListener('hidden.bs.modal', event => {
+            console.log(`Modal ${modalEl.id} closed.`);
+        });
+    });
+</script>
+
+
+<script th:src="@{/webjars/jquery/3.7.0/dist/jquery.js}"></script>
+<script th:src="@{/webjars/popperjs__core/2.11.8/dist/umd/popper.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.0/dist/js/bootstrap.bundle.js}"></script>
+
+</body>
+</html>
